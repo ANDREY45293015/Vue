@@ -27,6 +27,10 @@ let app = new Vue({
         addToCart() {
             this.cart += 1
         },
+        RemoveOnCart() {
+            this.cart -= 1
+        }
+
     }
 
 })
