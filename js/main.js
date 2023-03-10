@@ -19,40 +19,33 @@ let app = new Vue({
                 variantImage: "./assets/vmSocks-blue-onWhite.jpg",
                 variantQuantity: 0
             }
+
         ],
         cart: 0
+    },
+    methods: {
+        addToCart() {
+            this.cart += 1
+        },
+        updateProduct(index) {
+            this.selectedVariant = index;
+            console.log(index);
+        }
     },
     computed: {
         title() {
             return this.brand + ' ' + this.product;
         },
-        inStock(){
-            return this.variants[this.selectedVariant].variantQuantity
-        },
-
         image() {
             return this.variants[this.selectedVariant].variantImage;
         },
-        sale() {
-            if (this.onSale) {
-                return this.brand + ' ' + this.product + ' are on sale!'
-            }
-            return  this.brand + ' ' + this.product + ' are not on sale'
-        },
-
-    },
-
-    methods: {
-        addToCart() {
-            this.cart += 1
-        },
-
-        updateProduct(index) {
-            this.selectedVariant = index;
-            console.log(index);
+        inStock() {
+            return this.variants[this.selectedVariant].variantQuantity
         }
+
     }
 })
+
 
 
 
