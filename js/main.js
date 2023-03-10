@@ -32,7 +32,13 @@ let app = new Vue({
 
         image() {
             return this.variants[this.selectedVariant].variantImage;
-        }
+        },
+        sale() {
+            if (this.onSale) {
+                return this.brand + ' ' + this.product + ' are on sale!'
+            }
+            return  this.brand + ' ' + this.product + ' are not on sale'
+        },
 
     },
 
