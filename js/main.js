@@ -1,18 +1,3 @@
-Vue.component('product-details', {
-    props: {
-        details: {
-        type: Array,
-        required: true
-        }
-    },
-template: `
-<ul>
-   <li v-for="detail in details">{{ detail }}</li>
-</ul>
-`
-})
-
-
 Vue.component('product', {
     props: {
         premium: {
@@ -20,43 +5,42 @@ Vue.component('product', {
             required: true
         }
     },
-template: `
+    template: `
    <div class="product">
-        <div class="product-image">
-            <img :src="image" :alt="altText"/>
-        </div>
+    <div class="product-image">
+           <img :src="image" :alt="altText"/>
+       </div>
 
-        <div class="product-info">
-            <h1>{{ title }}</h1>
-            <p v-if="inStock">In stock</p>
-            <p v-else>Out of Stock</p>
-            <product-details :details="details"></product-details>
-            
-            <p>Shipping: {{ shipping }}</p>
-            
-            <div
-                    class="color-box"
-                    v-for="(variant, index) in variants"
-                    :key="variant.variantId"
-                    :style="{ backgroundColor:variant.variantColor }"
-                    @mouseover="updateProduct(index)"
-            ></div>
-        </div>
+       <div class="product-info">
+           <h1>{{ title }}</h1>
+           <p v-if="inStock">In stock</p>
+           <p v-else>Out of Stock</p>
+           <ul>
+               <li v-for="detail in details">{{ detail }}</li>
+           </ul>
+          <p>Shipping: {{ shipping }}</p>
+           <div
+                   class="color-box"
+                   v-for="(variant, index) in variants"
+                   :key="variant.variantId"
+                   :style="{ backgroundColor:variant.variantColor }"
+                   @mouseover="updateProduct(index)"
+           ></div>
+          
 
-        <div class="cart">
-            <p>Cart({{ cart }})</p>
-        </div>
+           <div class="cart">
+               <p>Cart({{ cart }})</p>
+           </div>
 
-        <button
-                v-on:click="addToCart"
-                :disabled="!inStock"
-                :class="{ disabledButton: !inStock }"
-        >
-            Add to cart
-        </button>
-    </div>
-
-</div>
+           <button
+                   v-on:click="addToCart"
+                   :disabled="!inStock"
+                   :class="{ disabledButton: !inStock }"
+           >
+               Add to cart
+           </button>
+       
+       </div>
    </div>
  `,
     data() {
@@ -79,15 +63,19 @@ template: `
                     variantImage: "./assets/vmSocks-blue-onWhite.jpg",
                     variantQuantity: 0
                 }
-
             ],
             cart: 0
         }
     },
     methods: {
-        addToCart() {
-            this.cart += 1
+        updateCart() {
+            this.cart += 1;
         },
+
+        addToCart() {
+            this.$emit('add-to-cart');
+        },
+
         updateProduct(index) {
             this.selectedVariant = index;
             console.log(index);
@@ -110,14 +98,18 @@ template: `
                 return 2.99
             }
         }
-
     }
 })
 let app = new Vue({
     el: '#app',
     data: {
-        premium: true
+        premium: true,
+        cart: 0
     }
 })
+
+
+
+
 
 
