@@ -68,14 +68,12 @@ Vue.component('product', {
         }
     },
     methods: {
-        updateCart() {
-            this.cart += 1;
-        },
-
         addToCart() {
             this.$emit('add-to-cart');
         },
-
+        updateCart() {
+            this.cart += 1;
+        },
         updateProduct(index) {
             this.selectedVariant = index;
             console.log(index);
@@ -107,6 +105,7 @@ let app = new Vue({
         cart: 0
     }
 })
+
 
 
 
