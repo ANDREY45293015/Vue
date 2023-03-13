@@ -26,12 +26,6 @@ Vue.component('product', {
                    :style="{ backgroundColor:variant.variantColor }"
                    @mouseover="updateProduct(index)"
            ></div>
-          
-
-           <div class="cart">
-               <p>Cart({{ cart }})</p>
-           </div>
-
            <button
                    v-on:click="addToCart"
                    :disabled="!inStock"
@@ -61,22 +55,19 @@ Vue.component('product', {
                     variantId: 2235,
                     variantColor: 'blue',
                     variantImage: "./assets/vmSocks-blue-onWhite.jpg",
-                    variantQuantity: 0
+                    variantQuantity: 20
                 }
             ],
-            cart: 0
         }
     },
     methods: {
         addToCart() {
-            this.$emit('add-to-cart');
-        },
-        updateCart() {
-            this.cart += 1;
+            this.$emit('add-to-cart',
+                this.variants[this.selectedVariant].variantId);
         },
         updateProduct(index) {
             this.selectedVariant = index;
-            console.log(index);
+            //console.log(index);
         }
     },
     computed: {
@@ -102,8 +93,15 @@ let app = new Vue({
     el: '#app',
     data: {
         premium: true,
-        cart: 0
+        cart: []
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id);
+            console.log("234")
+        }
     }
+
 })
 
 
